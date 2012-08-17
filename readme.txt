@@ -1,6 +1,6 @@
 bitcoin faucet public release
 ------------------------------------------
-Forum Thread: coming
+Forum Thread: https://bitcointalk.org/index.php?topic=101407.0
 this is the simplest version of it, other might get released in time
 
 made by Greedi 2012 (c)
