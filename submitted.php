@@ -3,8 +3,24 @@
 /**
  * @author Greedi
  * @copyright 2012
+ * This update by Joseph White joesfreicoinpool@gmail.com pool.cr.rs
+ *
+ * "clean_input" function from "crafter" of stackoverflow.com
+ * http://stackoverflow.com/a/10558896
+ *
  */
- error_reporting(E_ALL);
+function clean_input($instr) {
+
+     // Note that PHP performs addslashes() on GET/POST data.
+     // Avoid double escaping by checking the setting before doing this.
+    if(get_magic_quotes_gpc()) {
+        $str = stripslashes($instr);
+    }
+    return mysql_real_escape_string(strip_tags(trim($instr)));
+}
+//we don't want errors to be reported for now it just adds more vulnerability 
+// error_reporting(E_ALL);
+
 include ('core/banned.php');
 include_once ("core/wallet.php");
 include_once ('templates/header.php');
@@ -42,7 +58,9 @@ if (strtolower(ValidateCaptcha($adscaptchaID, $adsprivkey, $challengeValue, $res
         include ('templates/footer.php');
         die();
     } else {
-    $ltcaddress = $_POST['BTC'];
+    //sanitize $ltcaddress a bit to increase security
+    //this is still able to be broken. please fix it further. this is just a quick patch
+    $ltcaddress = clean_input($_POST['BTC']);
             mysql_query("INSERT INTO dailyltc (ltcaddress, ip)
     SELECT * FROM (SELECT '$ltcaddress', '$ip') AS tmp
     WHERE NOT EXISTS (
