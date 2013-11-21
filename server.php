@@ -10,12 +10,13 @@ $uptime = explode(',', $uptime[1]);
 $uptime = $uptime[0] . ', ' . $uptime[1];
 
 include ("core/wallet.php");
+include("core/config.php");
 include ('templates/header.php');
 ?>
         <div class="row">
         <div class="span10">
 <?php
-if ($_SERVER['REMOTE_ADDR'] != "127.0.0.1") {
+if ($_SERVER['REMOTE_ADDR'] != $yourIP) {
     echo '<div class="alert-message error" data-alert="alert" style="margin-right: 20px;"><a class="close" onclick="\$().alert()" href="#">&times</a><p>Access Denied.</p></div>';
 } else {
     $finishing_divs = "</div></div>";
